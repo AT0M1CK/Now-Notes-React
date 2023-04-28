@@ -5,10 +5,12 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      <div className="text-red-500">Hello there</div>
-    </main>
+    <div className="min-h-screen flex">
+      <nav className="w-56 flex-none bg-slate-300 ...">Sidebar</nav>
+
+      <main className="flex-1 min-w-0 overflow-auto ...">
+        <div>Hello there!</div>
+      </main>
+    </div>
   );
 }
