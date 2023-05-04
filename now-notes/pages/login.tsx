@@ -2,6 +2,7 @@ import LoginForm from "@/components/Form/LoginForm";
 import RegisterForm from "@/components/Form/RegisterForm";
 import TextInput from "@/components/TextInput";
 import React, { useState } from "react";
+import { auth } from "@/firebase/firebaseConfig";
 
 export enum LoginState {
   LOGIN,

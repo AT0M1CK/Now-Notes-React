@@ -2,8 +2,14 @@ import React from "react";
 import TextInput from "../TextInput";
 import { LoginState } from "@/pages/login";
 import { useForm } from "react-hook-form";
+import { auth } from "@/firebase/firebaseConfig";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { log } from "console";
+import { useRouter } from "next/router";
 
 const LoginForm = (props: { stateHandler: (newState: LoginState) => void }) => {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -12,57 +18,76 @@ const LoginForm = (props: { stateHandler: (newState: LoginState) => void }) => {
     setError,
   } = useForm();
 
+  const onFormSubmit = (data: any) => {
+    console.log(data);
+    signIn(data.email, data.password);
+  };
+
+  const signIn = async (email: string, password: string) => {
+    try {
+      const user = await signInWithEmailAndPassword(auth, email, password);
+      router.replace("/");
+      console.log(user);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
-      <form action="">
+      <form onSubmit={handleSubmit(onFormSubmit)}>
         <div className=" w-full flex justify-center text-center items-center my-5">
           <span>LOGIN</span>
         </div>
         <div className=" justify-center w-full flex flex-col p-5 ">
-          <form action="">
-            <div className="p-2">
-              <TextInput
-                type="text"
-                colorScheme="white"
-                rounded="md"
-                size="xs"
-                placeHolder="email"
-                borderScheme="white"
-                register={register}
-                error={errors}
-                name="email"
-                validationSchema={{
-                  required: true,
-                  //pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-                  patternError: "Invalid email.",
-                  requiredError: "Email cannot be empty",
-                }}
-              />
-            </div>
-            <div className="p-2">
-              {" "}
-              <TextInput
-                type="password"
-                colorScheme="white"
-                rounded="md"
-                size="xs"
-                placeHolder="password"
-                borderScheme="white"
-                register={register}
-                error={errors}
-                name="password"
-                validationSchema={{
-                  required: true,
-                  pattern:
-                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-                  patternError: "Invalid password.",
-                  requiredError: "Password cannot be empty",
-                }}
-              />
-            </div>
-            {/* error messages */}
-            {/* button */}
-          </form>
+          <div className="p-2">
+            <TextInput
+              type="text"
+              colorScheme="white"
+              rounded="md"
+              size="xs"
+              placeHolder="email"
+              borderScheme="white"
+              register={register}
+              error={errors}
+              name="email"
+              validationSchema={{
+                required: true,
+                //pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+                patternError: "Invalid email.",
+                requiredError: "Email cannot be empty",
+              }}
+            />
+          </div>
+          <div className="p-2">
+            {" "}
+            <TextInput
+              type="password"
+              colorScheme="white"
+              rounded="md"
+              size="xs"
+              placeHolder="password"
+              borderScheme="white"
+              register={register}
+              error={errors}
+              name="password"
+              validationSchema={{
+                required: true,
+                pattern:
+                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                patternError: "Invalid password.",
+                requiredError: "Password cannot be empty",
+              }}
+            />
+          </div>
+          {/* error messages */}
+          {/* button */}
+          <button
+            type="submit"
+            className="bg-blue-500 rounded-md text-white p-2"
+          >
+            LOGIN
+          </button>
         </div>
         {/* links div */}
         <div className="flex w-full flex-col  justify-center items-center p-5">

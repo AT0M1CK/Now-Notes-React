@@ -2,6 +2,7 @@ import React from "react";
 import TextInput from "../TextInput";
 import { useForm } from "react-hook-form";
 import { LoginState } from "@/pages/login";
+import MenuButton from "../MenuButton";
 
 const RegisterForm = (props: { stateHandler: (state: LoginState) => void }) => {
   const {
@@ -12,9 +13,13 @@ const RegisterForm = (props: { stateHandler: (state: LoginState) => void }) => {
     setError,
   } = useForm();
 
+  const onFormSubmit = (data: any) => {
+    console.log(data);
+  };
+
   return (
     <>
-      <form action="">
+      <form onSubmit={handleSubmit(onFormSubmit)}>
         <div className=" w-full flex justify-center text-center items-center my-5">
           <span>SIGN UP</span>
         </div>
@@ -61,11 +66,20 @@ const RegisterForm = (props: { stateHandler: (state: LoginState) => void }) => {
               />
             </div>
             {/* error messages */}
+            {/* <div className="flex text-red-500 justify-center text-center align-middle">
+              <span>Error message</span>
+            </div> */}
             {/* button */}
           </form>
+          <button
+            type="submit"
+            className="bg-blue-500 rounded-md text-white p-2"
+          >
+            SUBMIT
+          </button>
         </div>
         {/* links div */}
-        <div className="flex w-full flex-col  justify-center items-center p-5">
+        <div className="flex w-full flex-col  justify-center items-center px-5 pb-5">
           <div className="flex flex-row justify-center items-center text-center align-middle">
             <span>Already have an account ?</span>
             <button
