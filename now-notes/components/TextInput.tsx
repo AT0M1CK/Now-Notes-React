@@ -44,7 +44,7 @@ const TextInput = (props: TextInputProps) => {
   return (
     <>
       <input
-        className={` ${(sizes as any)[size!]} mt-3 w-full p-2 align-middle ${
+        className={` ${(sizes as any)[size!]} my-2 w-full p-2 align-middle ${
           (radius as any)[rounded!]
         }  text-md tracking-wide text-gray-700 disabled:cursor-not-allowed disabled:bg-gray-400 `}
         type={props.type}
