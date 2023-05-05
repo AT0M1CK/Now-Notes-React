@@ -2,9 +2,13 @@ import React from "react";
 import TextInput from "../TextInput";
 import { useForm } from "react-hook-form";
 import { LoginState } from "@/pages/login";
+import { useRouter } from "next/router";
 import MenuButton from "../MenuButton";
+import { auth } from "@/firebase/firebaseConfig";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const RegisterForm = (props: { stateHandler: (state: LoginState) => void }) => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -15,6 +19,22 @@ const RegisterForm = (props: { stateHandler: (state: LoginState) => void }) => {
 
   const onFormSubmit = (data: any) => {
     console.log(data);
+    signUp(data.email, data.password);
+  };
+
+  const signUp = async (email: string, password: string) => {
+    try {
+      const newUser = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = newUser.user;
+      props.stateHandler(LoginState.LOGIN);
+      console.log(user);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
