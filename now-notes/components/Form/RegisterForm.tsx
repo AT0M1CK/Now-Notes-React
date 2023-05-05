@@ -24,53 +24,52 @@ const RegisterForm = (props: { stateHandler: (state: LoginState) => void }) => {
           <span>SIGN UP</span>
         </div>
         <div className=" justify-center w-full flex flex-col p-5 ">
-          <form action="">
-            <div className="p-2">
-              <TextInput
-                type="text"
-                colorScheme="white"
-                rounded="md"
-                size="xs"
-                placeHolder="email"
-                borderScheme="white"
-                register={register}
-                error={errors}
-                name="email"
-                validationSchema={{
-                  required: true,
-                  //pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-                  patternError: "Invalid email.",
-                  requiredError: "Email cannot be empty",
-                }}
-              />
-            </div>
-            <div className="p-2">
-              {" "}
-              <TextInput
-                type="password"
-                colorScheme="white"
-                rounded="md"
-                size="xs"
-                placeHolder="password"
-                borderScheme="white"
-                register={register}
-                error={errors}
-                name="password"
-                validationSchema={{
-                  required: true,
-                  pattern:
-                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-                  patternError: "Invalid password.",
-                  requiredError: "Password cannot be empty",
-                }}
-              />
-            </div>
-            {/* error messages */}
-            {/* <div className="flex text-red-500 justify-center text-center align-middle">
+          <div className="p-2">
+            <TextInput
+              type="text"
+              colorScheme="white"
+              rounded="md"
+              size="xs"
+              placeHolder="email"
+              borderScheme="white"
+              register={register}
+              error={errors}
+              name="email"
+              validationSchema={{
+                required: true,
+                //pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+                patternError: "Invalid email.",
+                requiredError: "Email cannot be empty",
+              }}
+            />
+          </div>
+          <div className="p-2">
+            {" "}
+            <TextInput
+              type="password"
+              colorScheme="white"
+              rounded="md"
+              size="xs"
+              placeHolder="password"
+              borderScheme="white"
+              register={register}
+              error={errors}
+              name="password"
+              validationSchema={{
+                required: true,
+                pattern:
+                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                patternError: "Invalid password.",
+                requiredError: "Password cannot be empty",
+              }}
+            />
+          </div>
+          {/* error messages */}
+          {/* <div className="flex text-red-500 justify-center text-center align-middle">
               <span>Error message</span>
             </div> */}
-            {/* button */}
-          </form>
+          {/* button */}
+
           <button
             type="submit"
             className="bg-blue-500 rounded-md text-white p-2"

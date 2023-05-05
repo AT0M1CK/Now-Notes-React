@@ -6,9 +6,11 @@ import { auth } from "@/firebase/firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { log } from "console";
 import { useRouter } from "next/router";
+import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 
 const LoginForm = (props: { stateHandler: (newState: LoginState) => void }) => {
   const router = useRouter();
+  const provider = new GoogleAuthProvider();
 
   const {
     register,
@@ -23,11 +25,28 @@ const LoginForm = (props: { stateHandler: (newState: LoginState) => void }) => {
     signIn(data.email, data.password);
   };
 
+  // sign in
+
   const signIn = async (email: string, password: string) => {
     try {
       const user = await signInWithEmailAndPassword(auth, email, password);
       router.replace("/");
       console.log(user);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // sign in with popup
+
+  const signInWithGooglePopup = async () => {
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential?.accessToken;
+      const user = result.user;
+      console.log(user);
+      router.replace("/");
     } catch (error) {
       console.log(error);
     }
@@ -39,7 +58,7 @@ const LoginForm = (props: { stateHandler: (newState: LoginState) => void }) => {
         <div className=" w-full flex justify-center text-center items-center my-5">
           <span>LOGIN</span>
         </div>
-        <div className=" justify-center w-full flex flex-col p-5 ">
+        <div className=" justify-center w-full flex flex-col p-2 ">
           <div className="p-2">
             <TextInput
               type="text"
@@ -88,9 +107,17 @@ const LoginForm = (props: { stateHandler: (newState: LoginState) => void }) => {
           >
             LOGIN
           </button>
-        </div>
+          <button
+            className="mt-2 py-2 border text-center align-middle flex justify-center border-gray-500"
+            onClick={() => {
+              signInWithGooglePopup();
+            }}
+          >
+            Sign in with google
+          </button>
+        </div>{" "}
         {/* links div */}
-        <div className="flex w-full flex-col  justify-center items-center p-5">
+        <div className="flex w-full flex-col  justify-center items-center p-2 my-2">
           <div className="flex flex-row justify-center items-center text-center align-middle">
             <span>Dont have an account ?</span>
             <button

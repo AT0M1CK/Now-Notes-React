@@ -22,7 +22,7 @@ const LoginPage = () => {
   return (
     <>
       <div className="flex flex-row min-h-screen bg-gray-500 justify-center items-center">
-        <div className="flex flex-col h-96 w-96 justify-between rounded-lg shadow-lg items-center bg-gray-200">
+        <div className="flex flex-col w-96 justify-between rounded-lg shadow-lg items-center bg-gray-200">
           {/* span div */}
 
           {/* input div  */}
