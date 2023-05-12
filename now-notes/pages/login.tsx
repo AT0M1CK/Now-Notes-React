@@ -3,6 +3,7 @@ import RegisterForm from "@/components/Form/RegisterForm";
 import TextInput from "@/components/TextInput";
 import React, { useState } from "react";
 import { auth } from "@/firebase/firebaseConfig";
+import ResetForm from "@/components/Form/ResetForm";
 
 export enum LoginState {
   LOGIN,
@@ -35,6 +36,11 @@ const LoginPage = () => {
             <RegisterForm stateHandler={stateChangeHandler} />
           ) : (
             " "
+          )}
+          {loginState === LoginState.RESET_PASSWORD ? (
+            <ResetForm stateHandler={stateChangeHandler} />
+          ) : (
+            ""
           )}
         </div>
       </div>
