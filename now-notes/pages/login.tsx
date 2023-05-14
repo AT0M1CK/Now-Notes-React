@@ -22,26 +22,33 @@ const LoginPage = () => {
 
   return (
     <>
-      <div className="flex flex-row min-h-screen bg-gray-500 justify-center items-center">
-        <div className="flex flex-col w-96 justify-between rounded-lg shadow-lg items-center bg-gray-200">
-          {/* span div */}
+      <div className="min-h-screen flex">
+        <div className="flex-1 ...">
+          <div className="flex flex-row min-h-screen bg-gray-600 justify-center items-center">
+            <div className="flex flex-col h-128 w-128 p-10 md:w-128 sm:w-96 m-10  justify-between rounded-lg shadow-lg items-center bg-gray-200">
+              {/* span div */}
 
-          {/* input div  */}
-          {loginState === LoginState.LOGIN ? (
-            <LoginForm stateHandler={stateChangeHandler} />
-          ) : (
-            ""
-          )}
-          {loginState === LoginState.REGISTER ? (
-            <RegisterForm stateHandler={stateChangeHandler} />
-          ) : (
-            " "
-          )}
-          {loginState === LoginState.RESET_PASSWORD ? (
-            <ResetForm stateHandler={stateChangeHandler} />
-          ) : (
-            ""
-          )}
+              {/* input div  */}
+              {loginState === LoginState.LOGIN ? (
+                <LoginForm stateHandler={stateChangeHandler} />
+              ) : (
+                ""
+              )}
+              {loginState === LoginState.REGISTER ? (
+                <RegisterForm stateHandler={stateChangeHandler} />
+              ) : (
+                " "
+              )}
+              {loginState === LoginState.RESET_PASSWORD ? (
+                <ResetForm stateHandler={stateChangeHandler} />
+              ) : (
+                ""
+              )}
+            </div>
+          </div>
+        </div>
+        <div className="flex-1 ...">
+          <div className="flex flex-row min-h-screen bg-slate-200 justify-center items-center"></div>
         </div>
       </div>
     </>

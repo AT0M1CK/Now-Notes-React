@@ -10,6 +10,18 @@ module.exports = {
   ],
   theme: {
     extend: {
+      translate: {
+        full_15: "115%",
+      },
+      height: {
+        128: "32rem",
+      },
+      width: {
+        128: "32rem",
+      },
+      fontFamily: {
+        inter: ["Inter", "sans-serif"],
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
