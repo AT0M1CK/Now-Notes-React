@@ -1,11 +1,15 @@
 import { LoginState } from "@/pages/login";
-import React from "react";
+import React, { useState } from "react";
 import TextInput from "../TextInput";
 import { useForm } from "react-hook-form";
 import { auth } from "@/firebase/firebaseConfig";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
+} from "firebase/auth";
 
 const ResetForm = (props: { stateHandler: (newState: LoginState) => void }) => {
+  const [resetInProgress, setResetInProgress] = useState(false);
   const {
     register,
     handleSubmit,
@@ -14,15 +18,27 @@ const ResetForm = (props: { stateHandler: (newState: LoginState) => void }) => {
     setError,
   } = useForm();
 
-  const onFormSubmit = () => {
-    console.log("Submit fired");
+  const onFormSubmit = (data: any) => {
+    console.log(data);
+    sendMail(data.email);
+  };
+
+  const sendMail = async (email: string) => {
+    try {
+      const user = await sendPasswordResetEmail(auth, email);
+      // router.replace("/");
+      console.log(user);
+      setResetInProgress(true);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <>
       <form onSubmit={handleSubmit(onFormSubmit)}>
         <div className=" w-full flex justify-center text-center items-center my-5">
-          <span>RESET PASSWORD</span>
+          <span>SEND EMAIL</span>
         </div>
         <div className=" justify-center w-full flex flex-col p-2 ">
           <div className="p-2">
@@ -44,27 +60,54 @@ const ResetForm = (props: { stateHandler: (newState: LoginState) => void }) => {
               }}
             />
           </div>
-          <div className="p-2">
-            {" "}
-            <TextInput
-              type="password"
-              colorScheme="white"
-              rounded="md"
-              size="xs"
-              placeHolder="password"
-              borderScheme="white"
-              register={register}
-              error={errors}
-              name="password"
-              validationSchema={{
-                required: true,
-                pattern:
-                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-                patternError: "Invalid password.",
-                requiredError: "Password cannot be empty",
-              }}
-            />
-          </div>
+          {resetInProgress ? (
+            <>
+              <div className="p-2">
+                {" "}
+                <TextInput
+                  type="number"
+                  colorScheme="white"
+                  rounded="md"
+                  size="xs"
+                  placeHolder="code"
+                  borderScheme="white"
+                  register={register}
+                  error={errors}
+                  name="code"
+                  validationSchema={{
+                    required: true,
+                    // pattern:
+                    //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                    patternError: "Invalid code.",
+                    requiredError: "Code cannot be empty",
+                  }}
+                />
+              </div>
+              <div className="p-2">
+                {" "}
+                <TextInput
+                  type="password"
+                  colorScheme="white"
+                  rounded="md"
+                  size="xs"
+                  placeHolder="new password"
+                  borderScheme="white"
+                  register={register}
+                  error={errors}
+                  name="new_password"
+                  validationSchema={{
+                    required: true,
+                    pattern:
+                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                    patternError: "Invalid password.",
+                    requiredError: "Password cannot be empty",
+                  }}
+                />
+              </div>
+            </>
+          ) : (
+            ""
+          )}
           {/* error messages */}
           {/* button */}
           <button
