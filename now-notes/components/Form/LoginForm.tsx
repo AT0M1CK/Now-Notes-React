@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import TextInput from "../TextInput";
 import { LoginState } from "@/pages/login";
 import { useForm } from "react-hook-form";
@@ -7,8 +7,10 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { log } from "console";
 import { useRouter } from "next/router";
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
+import MenuButton from "../MenuButton";
 
 const LoginForm = (props: { stateHandler: (newState: LoginState) => void }) => {
+  const [loginError, setLoginError] = useState({ error: false, msg: "" });
   const router = useRouter();
   const provider = new GoogleAuthProvider();
 
@@ -32,7 +34,13 @@ const LoginForm = (props: { stateHandler: (newState: LoginState) => void }) => {
       const user = await signInWithEmailAndPassword(auth, email, password);
       router.replace("/");
       console.log(user);
-    } catch (error) {
+    } catch (error: any) {
+      setError(
+        "email",
+        { type: "custom", message: "user not found" },
+        { shouldFocus: true }
+      );
+      setLoginError({ error: true, msg: error.message });
       console.log(error);
     }
   };
@@ -100,6 +108,11 @@ const LoginForm = (props: { stateHandler: (newState: LoginState) => void }) => {
             />
           </div>
           {/* error messages */}
+          {loginError.error && (
+            <div className=" mb-2 text-center text-sm text-red-500">
+              {loginError.msg}
+            </div>
+          )}
           {/* button */}
           <button
             type="submit"
@@ -140,6 +153,15 @@ const LoginForm = (props: { stateHandler: (newState: LoginState) => void }) => {
               Click here
             </button>
           </div>
+          {/* <MenuButton
+            type="button"
+            variant="ghost"
+            radius="md"
+            colorScheme="black"
+            customCssProps="p-5"
+          >
+            BUTTON
+          </MenuButton> */}
         </div>
       </form>
     </>

@@ -60,65 +60,18 @@ const ResetForm = (props: { stateHandler: (newState: LoginState) => void }) => {
               }}
             />
           </div>
-          {resetInProgress ? (
-            <>
-              <div className="p-2">
-                {" "}
-                <TextInput
-                  type="number"
-                  colorScheme="white"
-                  rounded="md"
-                  size="xs"
-                  placeHolder="code"
-                  borderScheme="white"
-                  register={register}
-                  error={errors}
-                  name="code"
-                  validationSchema={{
-                    required: true,
-                    // pattern:
-                    //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-                    patternError: "Invalid code.",
-                    requiredError: "Code cannot be empty",
-                  }}
-                />
-              </div>
-              <div className="p-2">
-                {" "}
-                <TextInput
-                  type="password"
-                  colorScheme="white"
-                  rounded="md"
-                  size="xs"
-                  placeHolder="new password"
-                  borderScheme="white"
-                  register={register}
-                  error={errors}
-                  name="new_password"
-                  validationSchema={{
-                    required: true,
-                    pattern:
-                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-                    patternError: "Invalid password.",
-                    requiredError: "Password cannot be empty",
-                  }}
-                />
-              </div>
-            </>
-          ) : (
-            ""
-          )}
+
           {/* error messages */}
           {/* button */}
           <button
             type="submit"
             className="bg-blue-500 rounded-md text-white p-2"
           >
-            RESET
+            SEND CODE
           </button>
-        </div>{" "}
+        </div>
         {/* links div */}
-        <div className="flex w-full flex-col  justify-center items-center p-2 my-2">
+        <div className="flex w-full flex-col justify-center items-center p-2 my-2">
           <div className="flex flex-row justify-center items-center text-center align-middle">
             <span>Dont have an account ?</span>
             <button

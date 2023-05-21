@@ -5,7 +5,7 @@ export type MenuButtonPropsType = {
   type: "button" | "submit" | "reset";
   title?: string;
   colorScheme?: string;
-  className?: string;
+  customCssProps?: string;
   variant: string;
   shadow?: "xs" | "sm" | "md" | "lg" | "xl" | "normal" | "full" | "inner";
   radius?: "xs" | "sm" | "md" | "lg" | "xl" | "normal" | "full";
@@ -36,7 +36,7 @@ const MenuButton = (props: MenuButtonPropsType) => {
     rightIcon,
     shadow,
     buttonSize,
-    className,
+    customCssProps,
     disabled,
     isActive,
     isDisabled,
@@ -200,7 +200,7 @@ const MenuButton = (props: MenuButtonPropsType) => {
         onClick={() => {
           if (onClick) onClick();
         }}
-        className={` ${className} ${
+        className={` ${customCssProps} ${
           (variants as any)[variant]
         } flex items-center justify-center text-center  align-middle font-inter font-medium flex-row  ${
           (borderRadius as any)[radius!]

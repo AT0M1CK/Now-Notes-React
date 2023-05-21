@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import TextInput from "../TextInput";
 import { useForm } from "react-hook-form";
 import { LoginState } from "@/pages/login";
@@ -8,6 +8,7 @@ import { auth } from "@/firebase/firebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const RegisterForm = (props: { stateHandler: (state: LoginState) => void }) => {
+  const [signUpError, setSignUpError] = useState({ error: false, msg: "" });
   const router = useRouter();
   const {
     register,
@@ -32,7 +33,8 @@ const RegisterForm = (props: { stateHandler: (state: LoginState) => void }) => {
       const user = newUser.user;
       props.stateHandler(LoginState.LOGIN);
       console.log(user);
-    } catch (error) {
+    } catch (error: any) {
+      setSignUpError({ error: true, msg: error.message });
       console.log(error);
     }
   };
@@ -85,6 +87,11 @@ const RegisterForm = (props: { stateHandler: (state: LoginState) => void }) => {
             />
           </div>
           {/* error messages */}
+          {signUpError.error && (
+            <div className=" mb-2 text-center text-sm text-red-500">
+              {signUpError.msg}
+            </div>
+          )}
           {/* <div className="flex text-red-500 justify-center text-center align-middle">
               <span>Error message</span>
             </div> */}

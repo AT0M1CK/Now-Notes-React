@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import React, { ReactNode, forwardRef } from "react";
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 
 export type TextInputProps = {
@@ -63,6 +63,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
         placeholder={props.placeHolder}
         {...props.register(props.name || "", props.validationSchema)}
       />
+      {/* display errors div */}
       <div
         className=" my-2 text-sm text-red-600
       "
